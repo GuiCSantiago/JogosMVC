@@ -1,0 +1,34 @@
+﻿@model List<JogoViewModel>
+@{
+    ViewData["Title"] = "Listagem";
+}
+
+<h1>@ViewData["Title"]</h1>
+<br />
+<a href="/jogo/create">Novo Registro</a>
+
+<table class="table table-responsive table-striped">
+    <tr>
+        <th>Ação</th>
+        <th>Id</th>
+        <th>Descrição</th>
+        <th>Categoria</th>
+        <th>Valor de Locação</th>
+        <th>Data de aquisição</th>
+    </tr>
+
+    @foreach (JogoViewModel jogo in Model)
+    {
+        <tr>
+            <td>
+                <a href="/jogo/Edit?id=@jogo.Id"><img src="~/img/edit.png" /></a>
+                <a href="/jogo/Delete?id=@jogo.Id"><img src="~/img/delete.png" /></a>
+            </td>
+            <td>@jogo.Id</td>
+            <td>@jogo.Descricao</td>
+            <td>@jogo.CategoriaID</td>
+            <td>@jogo.Valor?.ToString("0.00")</td>
+            <td>@jogo.DataAquisicao.ToShortDateString()</td>
+        </tr>
+    }
+</table>

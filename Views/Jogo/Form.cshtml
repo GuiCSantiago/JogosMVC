@@ -1,0 +1,24 @@
+﻿@model JogoViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Cadastro de Aluno</h2>
+<form action="Salvar" method="post">
+    <label for="Id" class="control-label">Id</label>
+    <input type="number" Name="Id" value="@Model.Id" />
+    <br />
+    <label for="Descricao" class="control-label">Descrição</label>
+    <input type="text"  Name="Descricao" value="@Model.Descricao" />
+    <br />
+    <label for="Valor" class="control-label">Valor</label>
+    <input type="text" Name="Valor" value="@Model.Valor" />
+    <br />
+    <label for="DataAquisicao" class="control-label">Data de aquisição</label>
+    <input type="date" Name="DataAquisicao" value="@Model.DataAquisicao.ToString("yyyy-MM-dd")" />
+    <br />
+    <label for="CategoriaID" class="control-label">Id da Categoria</label>
+    <input type="number" Name="CategoriaID" value="@Model.CategoriaID" />
+    <br />
+    <input type="submit" value="Salvar dados" />
+    <br />
+</form>
