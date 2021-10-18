@@ -28,6 +28,7 @@ namespace MVCJogos.Controllers
         {
             try
             {
+                ViewBag.Operacao = "I";
                 JogoViewModel jogo = new JogoViewModel();
                 jogo.DataAquisicao = DateTime.Now;
                 JogoDAO dao = new JogoDAO();
@@ -40,14 +41,14 @@ namespace MVCJogos.Controllers
             }
         }
 
-        public IActionResult Salvar(JogoViewModel jogo)
+        public IActionResult Salvar(JogoViewModel jogo, string operacao)
         {
             try
             {
                 JogoDAO dao = new JogoDAO();
-                if (dao.Consulta(jogo.Id) == null)
+                if (operacao == "I")
                     dao.Inserir(jogo);
-                else
+                else if (operacao == "A")
                     dao.Alterar(jogo);
                 return RedirectToAction("index");
             }
@@ -61,6 +62,7 @@ namespace MVCJogos.Controllers
         {
             try
             {
+                ViewBag.Operacao = "A";
                 JogoDAO dao = new JogoDAO();
                 JogoViewModel jogo = dao.Consulta(id);
                 if (jogo == null)
