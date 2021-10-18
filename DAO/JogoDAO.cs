@@ -13,13 +13,16 @@ namespace MVCJogos.DAO
     {
         private SqlParameter[] CriaParametros(JogoViewModel jogo)
         {
-            SqlParameter[] p = {
-                new SqlParameter("id", jogo.Id),
-                new SqlParameter("descricao", jogo.Descricao),
-                new SqlParameter("categoriaID", jogo.CategoriaID),
-                new SqlParameter("data_aquisicao", jogo.DataAquisicao),
-                new SqlParameter("valor_locacao", jogo.Valor),
-            };
+            SqlParameter[] p = new SqlParameter[5];
+
+            p[0] = new SqlParameter("id", jogo.Id);
+            p[1] = new SqlParameter("descricao", jogo.Descricao);
+            p[2] = new SqlParameter("categoriaID", jogo.CategoriaID);
+            p[3] = new SqlParameter("data_aquisicao", jogo.DataAquisicao);
+            if (jogo.Valor == null)
+                p[4] = new SqlParameter("valor_locacao", DBNull.Value);
+            else
+                p[4] = new SqlParameter("valor_locacao", jogo.Valor);
 
             return p;
         }
@@ -80,6 +83,13 @@ namespace MVCJogos.DAO
             Jogo.Valor = Convert.ToDouble(registro["valor_locacao"]);
             Jogo.DataAquisicao = Convert.ToDateTime(registro["data_aquisicao"]);
             return Jogo;
+        }
+
+        public int ProximoId()
+        {
+            string sql = "select isnull(max(id) +1, 1) as 'MAIOR' from jogos";
+            DataTable tabela = HelperDAO.ExecutaSelect(sql, null);
+            return Convert.ToInt32(tabela.Rows[0]["MAIOR"]);
         }
     }
 }

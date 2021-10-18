@@ -31,13 +31,7 @@ namespace MVCJogos.Controllers
                 JogoViewModel jogo = new JogoViewModel();
                 jogo.DataAquisicao = DateTime.Now;
                 JogoDAO dao = new JogoDAO();
-                int id = 1;
-                foreach (JogoViewModel obj in dao.Lista())
-                {
-                    if (obj.Id >= id)
-                        id = obj.Id + 1;
-                }
-                jogo.Id = id;
+                jogo.Id = dao.ProximoId();
                 return View("Form", jogo);
             }
             catch (Exception erro)
@@ -80,24 +74,6 @@ namespace MVCJogos.Controllers
             }
         }
 
-        public IActionResult Delete(int? id)
-        {
-            try
-            {
-                JogoDAO dao = new JogoDAO();
-                JogoViewModel jogo = dao.Consulta(id.Value);
-                if (jogo == null)
-                    return RedirectToAction("index");
-                return View("Deletar", jogo);
-            }
-            catch (Exception erro)
-            {
-                return View("Error", new ErrorViewModel(erro.ToString()));
-            }
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
             try
