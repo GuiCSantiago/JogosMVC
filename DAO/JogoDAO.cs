@@ -80,7 +80,8 @@ namespace MVCJogos.DAO
             Jogo.Id = Convert.ToInt32(registro["id"]);
             Jogo.Descricao = registro["descricao"].ToString();
             Jogo.CategoriaID = Convert.ToInt32(registro["categoriaID"]);
-            Jogo.Valor = Convert.ToDouble(registro["valor_locacao"]);
+            if (registro["valor_locacao"] != DBNull.Value)
+                Jogo.Valor = Convert.ToDouble(registro["valor_locacao"]);
             Jogo.DataAquisicao = Convert.ToDateTime(registro["data_aquisicao"]);
             return Jogo;
         }
